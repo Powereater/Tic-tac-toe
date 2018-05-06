@@ -1,0 +1,12 @@
+#!/bin/bash
+
+player2 () {
+#echo ${board[@]}
+echo -n "where do you want to go player 2? :  "
+read place
+
+board[$place]=o
+
+}
+
+ 

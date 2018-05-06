@@ -2,7 +2,7 @@
 
 player1 () {
 #echo ${board[@]}
-echo -n "where do you want to go? :  "
+echo -n "where do you want to go player 1? :  "
 read place
 
 board[$place]=x

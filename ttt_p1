@@ -4,21 +4,15 @@ player1 () {
 
 echo -n "where do you want to go player 1? :  "
 read place
-
-while [[ ! $place =~ ^[0-8]+$ ]]; do
+# good thing i figured out how || operator worked
+while [[ ! $place =~ ^[0-8]+$ || ! ${board[$place]} =~ ^[0-8]+$ ]]; do
 	
 	echo -n "you cant go there, go somewhere else : "
 	
 	read place
 	continue
 
-	while [[ ! ${board[$place]} =~ ^[0-8]+$ ]]; do
-	
-		echo -n "you cant go there, go somewhere else : "
-	
-		read place
-	
-	done	
+		
 done
 	
 	

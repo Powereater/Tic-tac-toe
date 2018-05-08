@@ -5,20 +5,14 @@ player2 () {
 echo -n "where do you want to go player 2? :  "
 read place
 
-while [[ ! $place =~ ^[0-8]+$ ]]; do
+while [[ ! $place =~ ^[0-8]+$ || ! ${board[$place]} =~ ^[0-8]+$ ]]; do
 	
 	echo -n "you cant go there, go somewhere else : "
 	
 	read place
 	continue
 
-	while [[ ! ${board[$place]} =~ ^[0-8]+$ ]]; do
-	
-		echo -n "you cant go there, go somewhere else : "
-	
-		read place
-	
-	done	
+		
 done
 	
 board[$place]=o

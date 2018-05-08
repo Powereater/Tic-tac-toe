@@ -1,0 +1,71 @@
+#!/bin/bash
+
+go_if_empty () {
+i=${board[$1]}
+
+if [[ "$i" != "x" && "$i" != "o" ]]; then
+	board[$1]=o
+	echo "i went to $1 as a part of a general pattern"
+	#this two lines of code are somewhat important as they stop the thing
+	counter=1
+	continue
+fi
+
+}
+
+def_and_off () {
+i=${board[$1]}
+j=${board[$2]}
+k=${board[$3]}
+
+if [[ $i == $j && $k != x ]]; then
+	board[$3]=o
+	echo "i went to $3 as a part of a defensive/offensive pattern"
+	#this two lines of code are somewhat important as they stop the thing
+	counter=1
+	continue
+fi
+if [[ $i == $k && $j != x ]]; then
+	board[$2]=o
+	echo "i went to $2 as a part of a defensive/offensive pattern"
+	#this two lines of code are somewhat important as they stop the thing
+	counter=1
+	continue
+fi
+if [[ $k == $j && $i != x ]]; then
+	board[$1]=o
+	echo "i went to $1 as a part of a defensive/offensive pattern"
+	#this two lines of code are somewhat important as they stop the thing
+	counter=1
+	continue
+fi
+}
+ai2 () {
+counter=0
+while [[ $counter == 0 ]]; do
+def_and_off 0 1 2
+def_and_off 3 4 5
+def_and_off 6 7 8
+def_and_off 0 3 6
+def_and_off 1 4 7
+def_and_off 2 5 8
+def_and_off 0 4 8
+def_and_off 2 4 6
+go_if_empty 4
+go_if_empty 0
+go_if_empty 2
+go_if_empty 6
+go_if_empty 8
+go_if_empty 1
+go_if_empty 3
+go_if_empty 5
+go_if_empty 7
+
+
+
+done
+
+
+
+}
+

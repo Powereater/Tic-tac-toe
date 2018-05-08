@@ -1,0 +1,74 @@
+#!/bin/bash
+
+board_display() {
+
+echo "
+	${board[0]} | ${board[1]} | ${board[2]}
+	---------
+	${board[3]} | ${board[4]} | ${board[5]}
+	---------
+	${board[6]} | ${board[7]} | ${board[8]}"
+
+}
+vic_check() {
+
+a=${board[$1]}
+
+b=${board[$2]}
+
+c=${board[$3]}
+
+
+if [[ $a == $b && $b == $c ]]; then
+	echo "someone has won"
+	exit
+
+fi
+}
+
+
+
+board=(0 1 2 3 4 5 6 7 8)
+board_display
+while [[ ${board[0]} == 0 || ${board[1]} == 1 || ${board[2]} == 2 || ${board[3]} == 3 || ${board[4]} == 4 ||${board[5]} == 5|| ${board[6]} == 6 || ${board[7]} == 7 || ${board[8]} == 8 ]]; do
+	#vic_chekc check victories conditions, in tictac toe there are 8
+	vic_check 0 1 2
+	vic_check 3 4 5
+	vic_check 6 7 8
+	vic_check 0 3 6
+	vic_check 1 4 7
+	vic_check 2 5 8
+	vic_check 0 4 8
+	vic_check 2 4 6
+
+	source ./ttt_p1
+	player1
+
+	board_display
+	#is there a way to condense an expression?
+	
+	if [[ ${board[0]} == 0 || ${board[1]} == 1 || ${board[2]} == 2 || ${board[3]} == 3 || ${board[4]} == 4 ||${board[5]} == 5|| ${board[6]} == 6 || ${board[7]} == 7 || ${board[8]} == 8 ]]; then
+		vic_check 0 1 2
+		vic_check 3 4 5
+		vic_check 6 7 8
+		vic_check 0 3 6
+		vic_check 1 4 7
+		vic_check 2 5 8
+		vic_check 0 4 8
+		vic_check 2 4 6
+		source ./ttt_ai2
+		ai2
+
+		board_display 
+		
+	fi
+	
+done
+	echo "the board is filled"
+
+	
+	
+
+
+
+

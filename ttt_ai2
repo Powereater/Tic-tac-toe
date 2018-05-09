@@ -13,26 +13,28 @@ fi
 
 }
 
+
 def_and_off () {
+#def and off should be optimized so that tries to win rather than defend against a lost.
 i=${board[$1]}
 j=${board[$2]}
 k=${board[$3]}
 
-if [[ $i == $j && $k != x ]]; then
+if [[ $i == $j && $k != x && $k != o ]]; then
 	board[$3]=o
 	echo "i went to $3 as a part of a defensive/offensive pattern"
 	#this two lines of code are somewhat important as they stop the thing
 	counter=1
 	continue
 fi
-if [[ $i == $k && $j != x ]]; then
+if [[ $i == $k && $j != x && $j != o ]]; then
 	board[$2]=o
 	echo "i went to $2 as a part of a defensive/offensive pattern"
 	#this two lines of code are somewhat important as they stop the thing
 	counter=1
 	continue
 fi
-if [[ $k == $j && $i != x ]]; then
+if [[ $k == $j && $i != x && $i != o ]]; then
 	board[$1]=o
 	echo "i went to $1 as a part of a defensive/offensive pattern"
 	#this two lines of code are somewhat important as they stop the thing
@@ -40,9 +42,33 @@ if [[ $k == $j && $i != x ]]; then
 	continue
 fi
 }
+
+
+pmpt_def2 () {
+#designed to go certain places if specific pattern detected, current detected pattern is two specific areas.
+i=${board[$1]}
+j=${board[$2]}
+k=${board[$3]}
+
+if [[ $i == x && $j == x && $k != x && $k != o ]]; then
+	board[$3]=o
+	echo "i went to $3 as a part of a preemptive defensive pattern"
+	#this two lines of code are somewhat important as they stop the thing
+	counter=1
+	continue
+fi
+
+}
+
+
+
+
 ai2 () {
+
 counter=0
+
 while [[ $counter == 0 ]]; do
+#the AI will play defensive/offensive first (if possible)
 def_and_off 0 1 2
 def_and_off 3 4 5
 def_and_off 6 7 8
@@ -51,6 +77,14 @@ def_and_off 1 4 7
 def_and_off 2 5 8
 def_and_off 0 4 8
 def_and_off 2 4 6
+#set premptive defensive patterns
+pmpt_def2 0 8 1
+pmpt_def2 2 6 7
+pmpt_def2 5 7 8
+
+
+
+#standard patterns
 go_if_empty 4
 go_if_empty 0
 go_if_empty 2

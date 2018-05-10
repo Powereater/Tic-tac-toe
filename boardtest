@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+board=(0 x 2 3 4 o 6 x 8)
+board_display() {
+#pretty board
+p_b=("${board[@]}")
+a_count=0
+#a sequence to change teh color of things to make them more promenent
+for i in ${p_b[@]} ; do
+	if [[ $i == x ]]; then
+	p_b[$a_count]="\e[31m\e[1mX\e[21m\e[39m"
+	elif [[ $i == o ]]; then
+	p_b[$a_count]="\e[92m\e[1mO\e[21m\e[39m"
+
+	fi
+	a_count=$((a_count + 1))
+done
+
+echo -e "
+	${p_b[0]} | ${p_b[1]} | ${p_b[2]}
+	---------
+	${p_b[3]} | ${p_b[4]} | ${p_b[5]}
+	---------
+	${p_b[6]} | ${p_b[7]} | ${p_b[8]}"
+
+}
+
+board_display

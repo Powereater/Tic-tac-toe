@@ -15,6 +15,7 @@ for i in ${p_b[@]} ; do
 	a_count=$((a_count + 1))
 done
 
+#perhapes seperate this bit out for more versitility in the future
 echo -e "
 	${p_b[0]} | ${p_b[1]} | ${p_b[2]}
 	---------
@@ -33,7 +34,35 @@ c=${board[$3]}
 
 
 if [[ $a == $b && $b == $c ]]; then
-	echo "someone has won"
+	if [[ $a == x ]]; then
+		p_b[$1]="\e[31m\e[1m\e[7mX\e[21m\e[39m\e[27m"
+		p_b[$2]="\e[31m\e[1m\e[7mX\e[21m\e[39m\e[27m"
+		p_b[$3]="\e[31m\e[1m\e[7mX\e[21m\e[39m\e[27m"
+	
+	echo -e "\e[31m\e[1m\e[7mplayer 1\e[21m\e[39m\e[27m HAS WON!!!"
+
+	elif [[ $a == o ]]; then
+
+		p_b[$1]="\e[92m\e[1m\e[7mO\e[21m\e[39m\e[27m"
+		p_b[$2]="\e[92m\e[1m\e[7mO\e[21m\e[39m\e[27m"
+		p_b[$3]="\e[92m\e[1m\e[7mO\e[21m\e[39m\e[27m"
+		if [[ $gamemode == 1 ]]; then
+		echo -e "\e[92m\e[1m\e[7mSTEVETRON 4000\e[21m\e[39m\e[27m IS UNSTOPPABLE!!"
+		fi
+		if [[ $gamemode == 2 ]]; then
+		echo -e "\e[92m\e[1m\e[7mplayer 2\e[21m\e[39m\e[27m HAS WON!!!"
+		fi
+		
+	fi
+
+	echo -e "
+	${p_b[0]} | ${p_b[1]} | ${p_b[2]}
+	---------
+	${p_b[3]} | ${p_b[4]} | ${p_b[5]}
+	---------
+	${p_b[6]} | ${p_b[7]} | ${p_b[8]}"
+	
+	
 	exit
 
 fi
@@ -66,7 +95,12 @@ else
 fi
 
 while [[ ${board[0]} == 0 || ${board[1]} == 1 || ${board[2]} == 2 || ${board[3]} == 3 || ${board[4]} == 4 ||${board[5]} == 5|| ${board[6]} == 6 || ${board[7]} == 7 || ${board[8]} == 8 ]]; do
-	#vic_chekc check victories conditions, in tictac toe there are 8
+	board_display
+	
+	source ./ttt_p1
+	player1
+
+	#vic_chekc check victories conditions, in tictactoe there are 8
 	vic_check 0 1 2
 	vic_check 3 4 5
 	vic_check 6 7 8
@@ -76,21 +110,13 @@ while [[ ${board[0]} == 0 || ${board[1]} == 1 || ${board[2]} == 2 || ${board[3]}
 	vic_check 0 4 8
 	vic_check 2 4 6
 
-	source ./ttt_p1
-	player1
+	
 
-	board_display
+	
 	#is there a way to condense an expression?
 	
 	if [[ ${board[0]} == 0 || ${board[1]} == 1 || ${board[2]} == 2 || ${board[3]} == 3 || ${board[4]} == 4 ||${board[5]} == 5|| ${board[6]} == 6 || ${board[7]} == 7 || ${board[8]} == 8 ]]; then
-		vic_check 0 1 2
-		vic_check 3 4 5
-		vic_check 6 7 8
-		vic_check 0 3 6
-		vic_check 1 4 7
-		vic_check 2 5 8
-		vic_check 0 4 8
-		vic_check 2 4 6
+		board_display 
 
 		if [[ $gamemode =~ ^[1-2]$ ]]; then
 			if [[ $gamemode == 1 ]]; then
@@ -107,14 +133,23 @@ while [[ ${board[0]} == 0 || ${board[1]} == 1 || ${board[2]} == 2 || ${board[3]}
 			exit 1
 			fi
 		
-		
+				
+		fi
 
-		board_display 
+		vic_check 0 1 2
+		vic_check 3 4 5
+		vic_check 6 7 8
+		vic_check 0 3 6
+		vic_check 1 4 7
+		vic_check 2 5 8
+		vic_check 0 4 8
+		vic_check 2 4 6
+
 		
-	fi
 	
 done
-	echo "the board is filled"
+	board_display
+	echo "the board is filled, looks like it's a draw"
 
 	
 	

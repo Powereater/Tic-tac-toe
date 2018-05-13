@@ -2,7 +2,7 @@
 
 player1 () {
 
-echo -n "where do you want to go player 1? :  "
+echo -ne "where do you want to go \e[31m\e[1mPlayer 1\e[21m\e[39m ?:  "
 read place
 # good thing i figured out how || operator worked
 while [[ ! $place =~ ^[0-8]+$ || ! ${board[$place]} =~ ^[0-8]+$ ]]; do
